@@ -1,0 +1,47 @@
+#!/usr/bin/env ruby
+
+require 'rubygems'
+require 'lab_bench'
+
+SOCKETS = []
+
+class SinatraMothership < Sinatra::Base
+  set :public, File.join(LabBench::ROOT, '/static')
+  
+  get '/' do
+    redirect '/index.html'
+  end
+  
+  # lets the babyship ensure that we're up and running
+  get '/ping' do
+    'Pong!'
+  end
+  
+  # give the babyship a chance to post events, that we just rebroadcast
+  post '/test_event' do
+    message = params.merge(:milliseconds => (Time.now.to_f * 1000).to_i).to_json
+    SOCKETS.each { |s| s.send message }
+    
+    # should vend back a UID for this test run or something
+    # might also need to accept a UID that the client has already given us
+    'Okay'
+  end
+end
+
+EventMachine.run do
+  # HACK - websockets and HTTP on different (adjacent) ports
+  EventMachine::WebSocket.start(:host => '0.0.0.0', :port => 9021) do |ws|
+    ws.onopen do
+      SOCKETS << ws
+    end
+    
+    ws.onclose do
+      SOCKETS.delete(ws)
+    end
+
+    ws.onerror   { |e| puts "Error: #{e.message}" }
+  end
+  
+  # This doesn't work b/c it's not returning, so the EM loop doesn't get to run
+  SinatraMothership.run!(:host => '0.0.0.0', :port => 9020)
+end
