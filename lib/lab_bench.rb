@@ -3,3 +3,4 @@ module LabBench
   ASSETS = File.join(ROOT, 'assets')
 end
 
+require 'lab_bench/test_runner'

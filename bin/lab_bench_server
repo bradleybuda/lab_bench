@@ -7,10 +7,9 @@ require 'eventmachine'
 require 'em-websocket'
 require 'sinatra/base'
 require 'thin'
+require 'yajl'
 
 SOCKETS = []
-
-p LabBench::ASSETS
 
 class LabBenchServer < Sinatra::Base
   set :public, LabBench::ASSETS
@@ -26,7 +25,7 @@ class LabBenchServer < Sinatra::Base
   
   # give the babyship a chance to post events, that we just rebroadcast
   post '/test_event' do
-    message = params.merge(:milliseconds => (Time.now.to_f * 1000).to_i).to_json
+    message = Yajl::Encoder.encode(params.merge(:milliseconds => (Time.now.to_f * 1000).to_i))
     SOCKETS.each { |s| s.send message }
     
     # should vend back a UID for this test run or something

@@ -24,6 +24,7 @@ Jeweler::Tasks.new do |gem|
   gem.add_runtime_dependency 'eventmachine', '~> 0.12.10'
   gem.add_runtime_dependency 'em-websocket', '~> 0.2.0'
   gem.add_runtime_dependency 'thin', '~> 1.2.0'
+  gem.add_runtime_dependency 'yajl-ruby', '~> 0.7.8'
   #  gem.add_development_dependency 'rspec', '> 1.2.3'
 
   gem.files.include 'assets/**/*'
