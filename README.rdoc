@@ -2,6 +2,24 @@
 
 A browser-based runner for ruby Test::Unit tests.
 
+== Usage
+
+Install the gem:
+
+<tt>gem install lab_bench</tt>
+
+If you're using Rails 2.x, add this to config/environment.rb:
+
+<tt>config.gem 'lab_bench'</tt>
+
+Start the server in a new console / screen:
+
+<tt>lab_bench_server</tt>
+
+Send your browser to http://localhost:9020/ then run your tests like this:
+
+<tt>rake test TESTOPTS="--runner=lab_bench"</tt>
+
 == TODO
 
 * Show me test failures as they happen
