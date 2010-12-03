@@ -3,10 +3,17 @@
 require 'rubygems'
 require 'lab_bench'
 
+require 'eventmachine'
+require 'em-websocket'
+require 'sinatra/base'
+require 'thin'
+
 SOCKETS = []
 
-class SinatraMothership < Sinatra::Base
-  set :public, File.join(LabBench::ROOT, '/static')
+p LabBench::ASSETS
+
+class LabBenchServer < Sinatra::Base
+  set :public, LabBench::ASSETS
   
   get '/' do
     redirect '/index.html'
@@ -42,6 +49,5 @@ EventMachine.run do
     ws.onerror   { |e| puts "Error: #{e.message}" }
   end
   
-  # This doesn't work b/c it's not returning, so the EM loop doesn't get to run
-  SinatraMothership.run!(:host => '0.0.0.0', :port => 9020)
+  LabBenchServer.run!(:host => '0.0.0.0', :port => 9020)
 end
