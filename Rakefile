@@ -15,9 +15,9 @@ Jeweler::Tasks.new do |gem|
   gem.name = "lab_bench"
   gem.homepage = "http://github.com/bradleybuda/lab_bench"
   gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
-  gem.email = "brad@tracksimple.com"
+  gem.summary = %Q{A browser-based runner for Test::Unit}
+  gem.description = %Q{Like autotest, but in your browser. Currently unsuitable for use by anyone.}
+  gem.email = "bradleybuda@gmail.com"
   gem.authors = ["Bradley Buda"]
   # Include your dependencies below. Runtime dependencies are required when using your gem,
   # and development dependencies are only needed for development (ie running rake tasks, tests, etc)
