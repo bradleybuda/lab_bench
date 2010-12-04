@@ -29,7 +29,7 @@ testruns {
   overflow-y: scroll;
   position: fixed;
   top: 44px;
-  bottom: 283px;
+  bottom: 163px;
   left: 0;
   right: 0;
 }
@@ -73,7 +73,7 @@ eventlog {
   bottom: 0;
   left: 0;
   right: 0;
-  height: 280px;
+  height: 160px;
   border-top: 3px solid black;
   overflow-y: scroll;
 }
