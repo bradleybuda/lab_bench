@@ -22,7 +22,6 @@ Send your browser to http://localhost:9020/ then run your tests like this:
 
 == TODO
 
-* Show me test failures as they happen
 * Give me more context on the test suite (names of files being run, command line, project directory, etc)
 * Allow me to rerun a suite
 * Allow me to rerun a test

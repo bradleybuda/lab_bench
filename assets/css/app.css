@@ -48,7 +48,7 @@ testrunsummary {
   padding-left: 25px;
 }
 
-testrunsummary started, testrunsummary statitics {
+testrunsummary started, testrunsummary statistics {
   display: block;
 }
 
@@ -96,10 +96,47 @@ testevent.testFault {
   background-color: #FFBBBB;
 }
 
+faults {
+  display: inline-block;
+  width: 45%;
+  top: 0px;
+}
+
 fault {
   display: block;
-  border: 1px solid black;
-  width: 45%;
+  border: 2px solid red;
+  background-color: red;
+  color: white;
   padding: 3px;
   margin: 5px;
+  border-radius: 5px;
+}
+
+fault:hover {
+  cursor: pointer;
+}
+
+fault:hover, fault.selected {
+  border-color: white;
+}
+
+/* pure state - probably should move this to data rather than html */
+fault detail {
+  display: none;
+}
+
+/* displayed backtrace */
+/* TODO nice vertical alignment (with bounding box) with matching test */
+activefaultdetail {
+  display: block;
+  float: right;
+  width: 50%;
+  margin-right: 20px;
+  padding: 7px;
+  white-space: pre-wrap;
+  font-size: 0.9em;
+  font-family: Courier;
+  border: 2px solid white;
+  color: white;
+  background-color: black;
 }

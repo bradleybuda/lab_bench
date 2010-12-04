@@ -19,18 +19,26 @@ head.ready(function(){
             {{^showfaults}} \
               <a class='showFaults' href='#'>Show Failures</a> \
             {{/showfaults}} \
-            {{#showfaults}} \
-              <faults> \
-                {{#faults}} \
-                  <fault>{{.}}</fault> \
-                {{/faults}} \
-              </faults> \
-            {{/showfaults}} \
           {{/hasfailures}} \
           {{^hasfailures}} \
             <failedcount>no failures</failedcount> \
           {{/hasfailures}} \
         </statistics> \
+        {{#showfaults}} \
+          <faultpanel> \
+            <faults> \
+              {{#faults}} \
+                <fault {{#selected}}class='selected'{{/selected}}> \
+                  {{test}} \
+                  <detail>{{detail}}</detail> \
+                </fault> \
+              {{/faults}} \
+            </faults> \
+            {{#showfaultdetail}} \
+              <activefaultdetail>{{faultdetail}}</activefaultdetail> \
+            {{/showfaultdetail}} \
+           </faultpanel> \
+        {{/showfaults}} \
       </testrunsummary>", testrun.data()));
   };
 
@@ -45,6 +53,22 @@ head.ready(function(){
     var testrun = $(this).closest('testrun');
     testrun.data().showfaults = false;
     redrawTestrun(testrun);
+    return false;
+  });
+
+  $('testruns').delegate('fault', 'click', function(){
+    var testrun = $(this).closest('testrun');
+    testrun.data().faultdetail = $(this).find('detail').html();
+    testrun.data().showfaultdetail = true;
+
+    // mark only this fault as selected - TODO must be a better way to do this
+    _.each(testrun.data().faults, function(fault) { fault.selected = false; });
+    var details = testrun.find('detail');
+    var matchingFault = _.detect(details, function(detail) { return $(detail).html() === testrun.data().faultdetail; });
+    var matchingFaultIdx = _.indexOf(details, matchingFault);
+    testrun.data().faults[matchingFaultIdx].selected = true;
+    redrawTestrun(testrun);
+
     return false;
   });
 
@@ -119,7 +143,7 @@ head.ready(function(){
         } else if (message.event === "FAULT") {
           testrunData.failedCount += 1;
           testrunData.hasfailures = true;
-          testrunData.faults.push(testrunData.currentTest);
+          testrunData.faults.push({test: testrunData.currentTest, detail: message.args});
         } else if (message.event === "Test::Unit::TestCase::FINISHED") {
           testrunData.running = false;
           testrunData.testCount += 1;
