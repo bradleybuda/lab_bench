@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{lab_bench}
-  s.version = "0.2.0"
+  s.version = "0.2.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Bradley Buda"]
@@ -28,12 +28,16 @@ Gem::Specification.new do |s|
     "Rakefile",
     "VERSION",
     "assets/css/app.css",
+    "assets/images/connect.png",
+    "assets/images/disconnect.png",
     "assets/images/spinner.gif",
-    "assets/index.html",
     "assets/js/app.js",
     "assets/js/head.min.js",
     "assets/js/mustache.js",
+    "assets/js/underscore-min.js",
+    "assets/views/index.haml",
     "bin/lab_bench_server",
+    "lab_bench.gemspec",
     "lib/lab_bench.rb",
     "lib/lab_bench/test_runner.rb",
     "test/helper.rb",
@@ -54,20 +58,34 @@ Gem::Specification.new do |s|
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
+      s.add_runtime_dependency(%q<haml>, ["~> 2.2.0"])
+      s.add_runtime_dependency(%q<sinatra>, ["~> 1.1.0"])
+      s.add_runtime_dependency(%q<eventmachine>, ["~> 0.12.10"])
+      s.add_runtime_dependency(%q<em-websocket>, ["~> 0.2.0"])
+      s.add_runtime_dependency(%q<thin>, ["~> 1.2.0"])
+      s.add_runtime_dependency(%q<yajl-ruby>, ["~> 0.7.8"])
       s.add_development_dependency(%q<shoulda>, [">= 0"])
       s.add_development_dependency(%q<bundler>, ["~> 1.0.0"])
       s.add_development_dependency(%q<jeweler>, ["~> 1.5.1"])
       s.add_development_dependency(%q<rcov>, [">= 0"])
+      s.add_development_dependency(%q<hpricot>, [">= 0"])
       s.add_runtime_dependency(%q<sinatra>, ["~> 1.1.0"])
       s.add_runtime_dependency(%q<eventmachine>, ["~> 0.12.10"])
       s.add_runtime_dependency(%q<em-websocket>, ["~> 0.2.0"])
       s.add_runtime_dependency(%q<thin>, ["~> 1.2.0"])
       s.add_runtime_dependency(%q<yajl-ruby>, ["~> 0.7.8"])
     else
+      s.add_dependency(%q<haml>, ["~> 2.2.0"])
+      s.add_dependency(%q<sinatra>, ["~> 1.1.0"])
+      s.add_dependency(%q<eventmachine>, ["~> 0.12.10"])
+      s.add_dependency(%q<em-websocket>, ["~> 0.2.0"])
+      s.add_dependency(%q<thin>, ["~> 1.2.0"])
+      s.add_dependency(%q<yajl-ruby>, ["~> 0.7.8"])
       s.add_dependency(%q<shoulda>, [">= 0"])
       s.add_dependency(%q<bundler>, ["~> 1.0.0"])
       s.add_dependency(%q<jeweler>, ["~> 1.5.1"])
       s.add_dependency(%q<rcov>, [">= 0"])
+      s.add_dependency(%q<hpricot>, [">= 0"])
       s.add_dependency(%q<sinatra>, ["~> 1.1.0"])
       s.add_dependency(%q<eventmachine>, ["~> 0.12.10"])
       s.add_dependency(%q<em-websocket>, ["~> 0.2.0"])
@@ -75,10 +93,17 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<yajl-ruby>, ["~> 0.7.8"])
     end
   else
+    s.add_dependency(%q<haml>, ["~> 2.2.0"])
+    s.add_dependency(%q<sinatra>, ["~> 1.1.0"])
+    s.add_dependency(%q<eventmachine>, ["~> 0.12.10"])
+    s.add_dependency(%q<em-websocket>, ["~> 0.2.0"])
+    s.add_dependency(%q<thin>, ["~> 1.2.0"])
+    s.add_dependency(%q<yajl-ruby>, ["~> 0.7.8"])
     s.add_dependency(%q<shoulda>, [">= 0"])
     s.add_dependency(%q<bundler>, ["~> 1.0.0"])
     s.add_dependency(%q<jeweler>, ["~> 1.5.1"])
     s.add_dependency(%q<rcov>, [">= 0"])
+    s.add_dependency(%q<hpricot>, [">= 0"])
     s.add_dependency(%q<sinatra>, ["~> 1.1.0"])
     s.add_dependency(%q<eventmachine>, ["~> 0.12.10"])
     s.add_dependency(%q<em-websocket>, ["~> 0.2.0"])
