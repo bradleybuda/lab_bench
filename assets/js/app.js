@@ -4,7 +4,7 @@ head.ready(function(){
     testrun.html(Mustache.to_html("\
       <testrunsummary class='{{status}}'> \
         <started> \
-          Test Run Started {{timestamp}} - {{status}} \
+          Test Run Started [{{timestamp}}] - {{status}} \
           {{#running}} \
             <currenttest>{{currentTest}}</currenttest> \
           {{/running}} \
@@ -79,19 +79,19 @@ head.ready(function(){
 
   var templates = {
     "Test::Unit::UI::TestRunnerMediator::STARTED":
-    "<testevent class='suiteStarted'><timestamp>{{timestamp}}</timestamp>Test Suite Started</testevent>",
+    "<testevent class='suiteStarted'><timestamp>[{{timestamp}}]</timestamp>Test Suite Started</testevent>",
     
     "Test::Unit::TestCase::STARTED":
-    "<testevent class='testStarted'><timestamp>{{timestamp}}</timestamp>Test Started: {{args}}</testevent>",
+    "<testevent class='testStarted'><timestamp>[{{timestamp}}]</timestamp>Test Started: {{args}}</testevent>",
 
     "FAULT":
-    "<testevent class='testFault'><timestamp>{{timestamp}}</timestamp>{{args}}</testevent>",
+    "<testevent class='testFault'><timestamp>[{{timestamp}}]</timestamp>{{args}}</testevent>",
 
     "Test::Unit::TestCase::FINISHED":
-    "<testevent class='testFinished'><timestamp>{{timestamp}}</timestamp>Test Completed: {{args}}</testevent>",
+    "<testevent class='testFinished'><timestamp>[{{timestamp}}]</timestamp>Test Completed: {{args}}</testevent>",
 
     "Test::Unit::UI::TestRunnerMediator::FINISHED":
-    "<testevent class='suiteFinished'><timestamp>{{timestamp}}</timestamp>Test Suite Completed in {{args}} seconds</testevent>"
+    "<testevent class='suiteFinished'><timestamp>[{{timestamp}}]</timestamp>Test Suite Completed in {{args}} seconds</testevent>"
   };
 
   socket.onopen = function (e) {
