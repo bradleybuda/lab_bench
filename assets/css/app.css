@@ -1,6 +1,6 @@
 appstatus {
   display: block;
-  height: 5%;
+  height: 40px;
   position: fixed;
   top: 0;
   left: 0;
@@ -27,9 +27,9 @@ appstatus.realtime {
 testruns {
   display: block;
   overflow-y: scroll;
-  height: 60%;
   position: fixed;
-  top: 6%;
+  top: 44px;
+  bottom: 283px;
   left: 0;
   right: 0;
 }
@@ -48,7 +48,7 @@ testrunsummary {
   padding-left: 25px;
 }
 
-testrunsummary started, testrunsummary currenttest, testrunsummary statitics {
+testrunsummary started, testrunsummary statitics {
   display: block;
 }
 
@@ -73,7 +73,7 @@ eventlog {
   bottom: 0;
   left: 0;
   right: 0;
-  height: 35%;
+  height: 280px;
   border-top: 3px solid black;
   overflow-y: scroll;
 }
@@ -94,4 +94,12 @@ testevent timestamp {
 
 testevent.testFault {
   background-color: #FFBBBB;
+}
+
+fault {
+  display: block;
+  border: 1px solid black;
+  width: 45%;
+  padding: 3px;
+  margin: 5px;
 }

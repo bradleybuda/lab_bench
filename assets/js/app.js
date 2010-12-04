@@ -1,4 +1,54 @@
 head.ready(function(){
+  var redrawTestrun = function(testrun) {
+    // rerender the suite based on the updated data
+    testrun.html(Mustache.to_html("\
+      <testrunsummary class='{{status}}'> \
+        <started> \
+          Test Run Started {{timestamp}} - {{status}} \
+          {{#running}} \
+            <currenttest>{{currentTest}}</currenttest> \
+          {{/running}} \
+        </started> \
+        <statistics> \
+          <testcount>{{testCount}} total test(s): </testcount> \
+          {{#hasfailures}} \
+            <failedcount>{{failedCount}} failure(s)</failedcount> \
+            {{#showfaults}} \
+              <a class='hideFaults' href='#'>Hide Failures</a> \
+            {{/showfaults}} \
+            {{^showfaults}} \
+              <a class='showFaults' href='#'>Show Failures</a> \
+            {{/showfaults}} \
+            {{#showfaults}} \
+              <faults> \
+                {{#faults}} \
+                  <fault>{{.}}</fault> \
+                {{/faults}} \
+              </faults> \
+            {{/showfaults}} \
+          {{/hasfailures}} \
+          {{^hasfailures}} \
+            <failedcount>no failures</failedcount> \
+          {{/hasfailures}} \
+        </statistics> \
+      </testrunsummary>", testrun.data()));
+  };
+
+  $('testruns').delegate('a.showFaults', 'click', function(){
+    var testrun = $(this).closest('testrun');
+    testrun.data().showfaults = true;
+    redrawTestrun(testrun);
+    return false;
+  });
+
+  $('testruns').delegate('a.hideFaults', 'click', function(){
+    var testrun = $(this).closest('testrun');
+    testrun.data().showfaults = false;
+    redrawTestrun(testrun);
+    return false;
+  });
+
+  // TODO don't assume localhost
   var socket = new WebSocket('ws://localhost:9021/');
 
   var suites = {};
@@ -59,12 +109,17 @@ head.ready(function(){
           testrunData.status = 'Initializing';
           testrunData.testCount = 0;
           testrunData.failedCount = 0;
+          testrunData.hasfailures = false;
+          testrunData.faults = [];
+          testrunData.showfaults = false;
         } else if (message.event === "Test::Unit::TestCase::STARTED") {
           testrunData.status = 'Running';
           testrunData.currentTest = message.args;
           testrunData.running = true;
         } else if (message.event === "FAULT") {
           testrunData.failedCount += 1;
+          testrunData.hasfailures = true;
+          testrunData.faults.push(testrunData.currentTest);
         } else if (message.event === "Test::Unit::TestCase::FINISHED") {
           testrunData.running = false;
           testrunData.testCount += 1;
@@ -76,18 +131,7 @@ head.ready(function(){
           }
         }
 
-        // rerender the suite based on the updated data
-        testrun.html(Mustache.to_html("\
-          <testrunsummary class='{{status}}'> \
-            <started>Test Run Started {{timestamp}} - {{status}}</started> \
-            {{#running}} \
-              <currenttest>Current Test: {{currentTest}}</currenttest> \
-            {{/running}} \
-            <statistics> \
-              <testcount>{{testCount}} total test(s)</testcount> \
-              <failedcount>{{failedCount}} failure(s)</failedcount> \
-            </statistics> \
-          </testrunsummary>", testrunData));
+        redrawTestrun(testrun);
       }
     }
   };
