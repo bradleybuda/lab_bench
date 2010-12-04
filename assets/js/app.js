@@ -33,9 +33,9 @@ head.ready(function(){
       var message = $.parseJSON(jsonMessage.data);
       
       if (_.isEqual(message, ['backfilling'])) {
-        $('appstatus').addClass('backfilling');
+        $('appstatus').attr('class', 'backfilling');
       } else if (_.isEqual(message,['realtime'])) {
-        $('appstatus').addClass('realtime');
+        $('appstatus').attr('class', 'realtime');
       } else {
         // append message to event log
         message.timestamp = new Date(message.milliseconds).toLocaleTimeString();
