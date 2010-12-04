@@ -1,0 +1,16 @@
+!!!
+%html
+  %head
+    %title
+      LabBench Test Status
+    %link{ :href => css('app'), :rel => "stylesheet" }
+    %script{ :src => js('head.min') }
+  %body
+    %appstatus
+    %testruns
+    %eventlog
+    %script{ :type => "text/javascript" }
+      head.js("http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js");
+      head.js("#{js('mustache')}");
+      head.js("#{js('underscore-min')}");
+      head.js("#{js('app')}");

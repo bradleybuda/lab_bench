@@ -3,6 +3,7 @@
 require 'rubygems'
 require 'lab_bench'
 
+require 'haml'
 require 'eventmachine'
 require 'em-websocket'
 require 'sinatra/base'
@@ -10,22 +11,36 @@ require 'thin'
 require 'yajl'
 
 SOCKETS = []
+MESSAGES = [] # TODO this is unbounded
 
 class LabBenchServer < Sinatra::Base
   set :public, LabBench::ASSETS
-  
-  get '/' do
-    redirect '/index.html'
+  set :views, File.join(LabBench::ASSETS, 'views')
+
+  helpers do
+    def css(css)
+      "/css/#{css}.css?" + File.mtime(File.join(LabBench::ASSETS, "css", "#{css}.css")).to_i.to_s
+    end
+    
+    def js(js)
+      "/js/#{js}.js?" + File.mtime(File.join(LabBench::ASSETS, "js", "#{js}.js")).to_i.to_s
+    end
   end
   
-  # lets the babyship ensure that we're up and running
+  get '/' do
+    haml :index
+  end
+  
+  # lets the TestRunner ensure that we're up and running
   get '/ping' do
     'Pong!'
   end
   
-  # give the babyship a chance to post events, that we just rebroadcast
+  # give the TestRunner a chance to post events, which we cache and rebrooadcase
   post '/test_event' do
     message = Yajl::Encoder.encode(params.merge(:milliseconds => (Time.now.to_f * 1000).to_i))
+    MESSAGES << message
+    
     SOCKETS.each { |s| s.send message }
     
     # should vend back a UID for this test run or something
@@ -38,6 +53,13 @@ EventMachine.run do
   # HACK - websockets and HTTP on different (adjacent) ports
   EventMachine::WebSocket.start(:host => '0.0.0.0', :port => 9021) do |ws|
     ws.onopen do
+      # backfill old messages to the client
+      # TODO is this blocking? I would guess no...
+      ws.send Yajl::Encoder.encode(['backfilling'])
+      MESSAGES.each { |message| ws.send(message) }
+
+      # put the client in the list of real-time recipients
+      ws.send Yajl::Encoder.encode(['realtime'])
       SOCKETS << ws
     end
     
@@ -45,7 +67,7 @@ EventMachine.run do
       SOCKETS.delete(ws)
     end
 
-    ws.onerror   { |e| puts "Error: #{e.message}" }
+    ws.onerror { |e| puts "Error: #{e.message}" }
   end
   
   LabBenchServer.run!(:host => '0.0.0.0', :port => 9020)

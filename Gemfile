@@ -1,6 +1,7 @@
 source "http://rubygems.org"
 
 # Add dependencies required to use your gem here.
+gem 'haml', '~> 2.2.0'
 gem 'sinatra', '~> 1.1.0'
 gem 'eventmachine', '~> 0.12.10'
 gem 'em-websocket', '~> 0.2.0'
@@ -14,4 +15,5 @@ group :development do
   gem "bundler", "~> 1.0.0"
   gem "jeweler", "~> 1.5.1"
   gem "rcov", ">= 0"
+  gem 'hpricot'
 end

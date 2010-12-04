@@ -8,6 +8,8 @@ GEM
       eventmachine (>= 0.12.9)
     eventmachine (0.12.10)
     git (1.2.5)
+    haml (2.2.24)
+    hpricot (0.8.3)
     jeweler (1.5.1)
       bundler (~> 1.0.0)
       git (>= 1.2.5)
@@ -33,6 +35,8 @@ DEPENDENCIES
   bundler (~> 1.0.0)
   em-websocket (~> 0.2.0)
   eventmachine (~> 0.12.10)
+  haml (~> 2.2.0)
+  hpricot
   jeweler (~> 1.5.1)
   rcov
   shoulda
