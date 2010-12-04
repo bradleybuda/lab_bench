@@ -55,6 +55,7 @@ testrunsummary started, testrunsummary statistics {
 /* TODO icons for these */
 testrunsummary.Running {
   background-image: url(/images/spinner.gif);
+  background-color: #EDF;
   background-repeat: no-repeat;
   background-position: 3px 4px;
 }
