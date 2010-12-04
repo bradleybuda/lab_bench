@@ -1,9 +1,23 @@
+appstatus {
+  display: block;
+  height: 5%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 2px;
+  padding-left: 20px;
+  background-color: #EEEEFF;
+  font-size: 1.6em;
+  line-height: 1.6em;
+}
+
 testruns {
   display: block;
   overflow-y: scroll;
-  height: 65%;
+  height: 60%;
   position: fixed;
-  top: 0;
+  top: 6%;
   left: 0;
   right: 0;
 }
