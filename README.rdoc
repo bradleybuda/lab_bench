@@ -22,9 +22,9 @@ Send your browser to http://localhost:9020/ then run your tests like this:
 
 == TODO
 
+* Give me more context on the test suite (names of files being run, command line, project directory, etc)
 * Trim dependencies, or break into two gems (client / server) so we can minimize the number of dependencies we pull into the test runner
 * Rails 3 compatability
-* Give me more context on the test suite (names of files being run, command line, project directory, etc)
 * Allow me to rerun a suite
 * Allow me to rerun a test
 * Allow me to rerun all failed tests within a suite

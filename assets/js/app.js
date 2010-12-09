@@ -72,8 +72,8 @@ head.ready(function(){
     return false;
   });
 
-  // TODO don't assume localhost
-  var socket = new WebSocket('ws://localhost:9021/');
+  // TODO any way to detect the hostname from the current page context, or construct a relative URI?
+  var socket = new WebSocket('ws://0.0.0.0:9021/');
 
   var suites = {};
 

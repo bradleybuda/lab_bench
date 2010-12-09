@@ -8,6 +8,14 @@ class LabBench::TestRunner < Test::Unit::UI::Console::TestRunner
   def initialize(*args)
     super(*args)
     
+    # TODO which info do we want to extract from the test suite
+    # suite has a name, and an array of tests
+    # looks like the tests can recursively be either suites, or test instances (subclasses of TestCase?)
+    # or should be be looking at rake? do we even know about rake here, or is this in a non rake-y subprocess?
+    # it's probably in a rake_test_loader.rb process
+    # what info do we need to persist and remanufacture the suite?
+    STDERR.puts @suite.inspect
+    
     if @lab_bench_enabled = mothership_alive?
       STDERR.puts "LabBench enabled - go to http://0.0.0.0:9020/ to see test results"
     else
@@ -46,7 +54,7 @@ class LabBench::TestRunner < Test::Unit::UI::Console::TestRunner
   end
 
   def mothership_uri(method)
-    URI.parse("http://localhost:9020/#{method}")
+    URI.parse("http://0.0.0.0:9020/#{method}")
   end
 end
 
